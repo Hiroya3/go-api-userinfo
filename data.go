@@ -7,7 +7,7 @@ import (
 )
 
 //データベースへのハンドル（構造体）
-var Db *sql.Db
+var Db *sql.DB
 
 func init() {
 	var err error
@@ -16,4 +16,10 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func getOne(id int) (userInfo UserInfo, err error) {
+	userInfo = UserInfo{}
+	err = Db.QueryRow("select id, name, age from user_info where id = $1", id).Scan(&userInfo.Id, &userInfo.Name, &userInfo.Age)
+	return
 }

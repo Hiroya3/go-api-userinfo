@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-type User struct {
+type UserInfo struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
 	Age  int    `json:"age"`
