@@ -6,8 +6,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-//データベースへのハンドル（構造体）
-var Db *sql.DB
+var db *sql.DB //データベースへのハンドル（構造体）
 
 func init() {
 	var err error
@@ -20,6 +19,27 @@ func init() {
 
 func getOne(id int) (userInfo UserInfo, err error) {
 	userInfo = UserInfo{}
-	err = Db.QueryRow("select id, name, age from user_info where id = $1", id).Scan(&userInfo.Id, &userInfo.Name, &userInfo.Age)
+	err = db.QueryRow("select id, name, age from user_info where id = $1", id).Scan(&userInfo.Id, &userInfo.Name, &userInfo.Age)
+	return
+}
+
+func (info *UserInfo) createInfo() (err error) {
+	statement := "insert into user_info (name,age) values ($1,$2) returning id"
+	stmt, err := db.Prepare(statement)
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(info.Name, info.Age).Scan(&info.Id)
+	return
+}
+
+func (info *UserInfo) updateInfo() (err error) {
+	_, err = db.Exec("update user_info set name = $2, age = $3 where id = $1", info.Id, info.Name, info.Age)
+	return
+}
+
+func (info *UserInfo) deleteInfo() (err error) {
+	_, err = db.Exec("delete from user_info where id = $1", info.Id)
 	return
 }
