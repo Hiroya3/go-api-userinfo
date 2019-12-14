@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
+	"path"
+	"strconv"
 )
 
 type UserInfo struct {
@@ -34,4 +37,21 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func handleGet(w http.ResponseWriter, r *http.Request) (err error) {
+	//path.Baaeでid取得
+	//strconv.Atoiで文字列のidを整数に変換
+	id, err := strconv.Atoi(path.Base(r.URL.Path))
+	if err != nil {
+		return
+	}
+	info, err := getOne(id)
+	return_info, err := json.MarshalIndent(&info, "", "\t\t")
+	if err != nil {
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(return_info)
+	return
 }
