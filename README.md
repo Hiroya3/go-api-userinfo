@@ -26,7 +26,33 @@ createuser -P -d dbuser
 createdb user_info
 ```
 
-### webサーバーの立ち上げ
-`go_api_userinfo` を実行
+## webサーバーの立ち上げ
+ソースをダウンロード or cloneして`go_api_userinfo` を実行
 
-### 各メソッドを実行
+## 各メソッドを実行
+### PUT
+以下のコマンドでデータ作成({name},{age}は適宜入れてください)
+
+```
+curl -i -X POST -H "Content-Type : application/json" -d '{"name":"{name}","age":{age}}' http://localhost:8080/user_info/
+```
+
+### GET
+以下のコマンドでデータを取得({id}は適宜入れてください)
+
+```
+curl -i -X GET http://localhost:8080/user_info/{id}
+```
+
+### PUT
+以下のコマンドでデータ更新({name},{age},{id}は適宜入れてください)
+
+```
+curl -i -X PUT -H "Content-Type : application/json" -d '{"name":"{name}","age":{age}}' http://localhost:8080/user_info/{id}
+```
+### DELETE
+以下のコマンドでデータを削除({id}は適宜入れてください)
+
+```
+curl -i -X DELETE http://localhost:8080/user_info/{id}
+```
