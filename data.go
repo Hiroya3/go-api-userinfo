@@ -11,7 +11,7 @@ var db *sql.DB //データベースへのハンドル（構造体）
 func init() {
 	var err error
 	//Openを使っているが、これはsql.Dbに接続に必要な構造体を設定するのみ
-	DB, err := sql.Open("postgres", "user=dbuser dbname=user_info password=pass sslmode=disable")
+	db, err = sql.Open("postgres", "user=dbuser dbname=user_info password=pass sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
