@@ -9,7 +9,7 @@ DELETE: 特定のユーザー情報を削除する<br>
 
 ## DBの準備
 ### 1.PostgreSQLのインストール
-Postgres.app(http://postgresapp.com)にアクセスし,PostgreSQLをインストール
+Postgres.app( http://postgresapp.com )にアクセスし,PostgreSQLをインストール
 
 ### 2.データベースユーザー作成
 以下のコマンドを実行し `dbuser` という名のユーザを作る
