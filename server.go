@@ -68,3 +68,24 @@ func handlePost(w http.ResponseWriter, r *http.Request) (err error) {
 	w.WriteHeader(200)
 	return
 }
+
+func handlePut(w http.ResponseWriter, r *http.Request) (err error) {
+	id, err := strconv.Atoi(path.Base(r.URL.Path))
+	if err != nil {
+		return
+	}
+	info, err := getOne(id)
+	if err != nil {
+		return
+	}
+	body := make([]byte, r.ContentLength)
+	r.Body.Read(body)
+	//取得した構造体UserInfoを上書き
+	json.Unmarshal(body, &info)
+	err = info.updateInfo()
+	if err != nil {
+		return
+	}
+	w.WriteHeader(200)
+	return
+}
