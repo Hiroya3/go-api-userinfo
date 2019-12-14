@@ -26,6 +26,13 @@ createuser -P -d dbuser
 createdb user_info
 ```
 
+### 4.権限付与
+以下のコマンドを実行し `dbuser` に権限を付与する
+
+```
+psql -c "grant all privileges on database user_info to dbuser"
+```
+
 ## webサーバーの立ち上げ
 ソースをダウンロード or cloneして`go_api_userinfo` を実行
 
