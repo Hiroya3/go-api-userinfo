@@ -15,9 +15,9 @@ type UserInfo struct {
 
 func main() {
 	server := http.Server{
-		Addr: "127.0.0.1:8080",
+		Addr: "localhost:8080",
 	}
-	http.HandleFunc("/post", handleRequest)
+	http.HandleFunc("/user_info/", handleRequest)
 	server.ListenAndServe()
 }
 
