@@ -55,3 +55,16 @@ func handleGet(w http.ResponseWriter, r *http.Request) (err error) {
 	w.Write(return_info)
 	return
 }
+
+func handlePost(w http.ResponseWriter, r *http.Request) (err error) {
+	body := make([]byte, r.ContentLength)
+	r.Body.Read(body)
+	var info UserInfo
+	json.Unmarshal(body, &info)
+	err = info.createInfo()
+	if err != nil {
+		return
+	}
+	w.WriteHeader(200)
+	return
+}
