@@ -24,17 +24,12 @@ func getOne(id int) (userInfo UserInfo, err error) {
 }
 
 func (info *UserInfo) createInfo() (err error) {
-	statement := "insert into user_info (name,age) values ($1,$2) returning id"
-	stmt, err := db.Prepare(statement)
-	if err != nil {
-		return
-	}
-	defer stmt.Close()
-	err = stmt.QueryRow(info.Name, info.Age).Scan(&info.Id)
+	err = db.QueryRow("insert into user_info (name,age) values ($1,$2) returning id", info.Name, info.Age).Scan(&info.Id)
 	return
 }
 
 func (info *UserInfo) updateInfo() (err error) {
+	//updateで返されるメソッドは関係ない
 	_, err = db.Exec("update user_info set name = $2, age = $3 where id = $1", info.Id, info.Name, info.Age)
 	return
 }
